@@ -36,7 +36,9 @@ def make_hash(input):
     block_sparse_hash = [sparse_hash[16*i:16*i+16] for i in list(range(16))]
 
     dense_hash = [list_xor(hash_block) for hash_block in block_sparse_hash]
-    hex_dense_hash = [hex(num)[2:] for num in dense_hash]
+
+    # ran into issue with hex for (0,16) having length 1 instead of 2
+    hex_dense_hash = [hex(num)[2:].zfill(2) for num in dense_hash]
 
     return(''.join(hex_dense_hash))
 
